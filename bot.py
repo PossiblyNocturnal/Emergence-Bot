@@ -76,15 +76,11 @@ async def yeet(ctx, member: discord.Member):
                               color=0xfdcf92)
     log_embed.set_author(name=f'{ctx.message.author} ({ctx.message.author.id})', icon_url=member.avatar_url)
     log_embed.set_footer(text="pain")
-#    roleYeet = member.guild.get_role(959576398475984927)
     roleAdd = member.guild.get_role(959023639062261770)
     
     if member_id == user:
         await ctx.message.add_reaction("❌")
         await ctx.send("retard you can't use it on yourself")
-    # elif roleAdd in member.roles:
-    #     await ctx.message.add_reaction("❌")
-    #     await ctx.send("no")
     else:
         roles = [role.id for role in member.roles]
         for role in roles[1:]:
