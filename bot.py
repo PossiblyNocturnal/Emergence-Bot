@@ -2,6 +2,7 @@ import discord
 import datetime
 import random
 import os
+import json
 from dotenv import load_dotenv
 from discord.ext import commands
 
@@ -145,9 +146,10 @@ async def whois(ctx, member: discord.Member = None):
     embed.set_footer(text='please help me')
     await ctx.message.reply(embed=embed)
 
-    
-# with open('token.txt') as token_file:
-    # token = token_file.read().strip()
 
+for filename in os.listdir("./cogs"):
+    if filename.endswith(".py"):
+        bot.load_extension(f'cogs.{filename[:-3]}')
+    
 
 bot.run(os.getenv("TOKEN"))
