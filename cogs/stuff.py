@@ -18,32 +18,34 @@ class stuff(commands.Cog):
             vcj = open("vc.json", "r+")
             ch = await ctx.guild.create_voice_channel(name=name, category=self.bot.get_channel(959609148507562004))
             c_info = {uid_str: {"Channel_name":ch.name, "Channel_id":ch.id}}
-            json.dump(c_info, vcj)
+            json.dump(c_info, vcj, indent=4)
             await ctx.send("Created **{}**".format(ch.name))
         elif os.stat("vc.json").st_size != 0:
             vcj = open("vc.json", "r")
             vcd = json.load(vcj)
-            if uid_str in vcd and vcd[uid_str]["Channel_id"] == "NaN": #If user had a vc but deleted it, create vc and updates entry
+            if uid_str in vcd and vcd[uid_str]["Channel_id"] == "NaN": #If user had a vc but deleted it, create vc and update entry
                 ch = await ctx.guild.create_voice_channel(name=name, category=self.bot.get_channel(959609148507562004))
                 c_info = {uid_str: {"Channel_name":ch.name, "Channel_id":ch.id}}
                 with open("vc.json", "w") as vcjw:
-                    json.dump(c_info, vcjw)
+                    json.dump(c_info, vcjw, indent = 4)
                 await ctx.send("Created **{}**".format(ch.name))
+    
+            #Supposed to create new entry for a new user, 
+            #but instead copies pre-edit file contents and pastes it on top of the file alongside with the new entry.
             elif uid_str not in vcd:
                 ch = await ctx.guild.create_voice_channel(name=name, category=self.bot.get_channel(959609148507562004))
                 c_info = {uid_str: {"Channel_name":ch.name, "Channel_id":ch.id}}
-                with open("vc.json", "r+") as vcjw:
-                    vd = json.load(vcjw)
-                    vd.update(c_info)
-                    json.dump(vd, vcjw)
+                with open("vc.json", "a") as vcjw:
+                #    vd = json.load(vcjw)
+                    json.dump(c_info, vcjw, indent=4)
                 await ctx.send("Created **{}**".format(ch.name))
-            else:
+            else:   #If user already has vc, delete it and set id to NaN
                 await ctx.send("Deleting **{}**...".format(vcd[uid_str]["Channel_name"]))
                 await self.bot.get_channel(vcd[uid_str]["Channel_id"]).delete()
                 vcd[uid_str]["Channel_id"] = "NaN"
                 with open("vc.json", "w") as vcjw:
-                    json.dump(vcd, vcjw)
-        else:
+                    json.dump(vcd, vcjw, indent = 4)
+        else: 
             await ctx.send("h")
             
                 
