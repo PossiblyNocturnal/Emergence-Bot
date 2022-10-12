@@ -11,7 +11,8 @@ intents = discord.Intents().all()
 load_dotenv()
 bot = commands.Bot(command_prefix=commands.when_mentioned_or('>'), intents=intents)
 bot.remove_command('help')
-mean_messages = ["how about you ping some bitches instead", "this is harassment", "you want to get sued mate?"]
+mean_messages = ["how about you ping some bitches instead", "this is harassment", "you want to get sued mate?", "banned"]
+footers = ["pain", "aaaaaaa", "why are you doing this", ":(", "hhh", "awa awa", "stop"]
 
 @bot.event
 async def on_ready():
@@ -37,7 +38,7 @@ async def assign(ctx, member: discord.Member):
     log_embed = discord.Embed(timestamp=ctx.message.created_at, description=
                               f'**{member}** ({member.id}) was let into the server\n \nGod help us all',
                               color=0xfdcf92)
-    log_embed.set_author(name=f'{ctx.message.author} ({ctx.message.author.id})', icon_url=member.avatar_url)
+    log_embed.set_author(name=f'{ctx.message.author} ({ctx.message.author.id})', icon_url=member.avatar)
     roleYeet = member.guild.get_role(959023639062261770)
     roleAdd = member.guild.get_role(959576398475984927)
     
@@ -68,14 +69,15 @@ async def assign_error(ctx, error):
 @commands.has_any_role(732646084744183899)
 async def yeet(ctx, member: discord.Member):
     user = ctx.message.author.id
+    random_feet = random.randrange(len(footers))
     member_id = member.id
     channel = bot.get_channel(904535607383048192)
     log_channel = bot.get_channel(959022627811385395)
     log_embed = discord.Embed(timestamp=ctx.message.created_at, description=
                               f'**{member}** ({member.id}) was yoten back to the <#904535607383048192>\n \nThank fuck',
                               color=0xfdcf92)
-    log_embed.set_author(name=f'{ctx.message.author} ({ctx.message.author.id})', icon_url=member.avatar_url)
-    log_embed.set_footer(text="pain")
+    log_embed.set_author(name=f'{ctx.message.author} ({ctx.message.author.id})', icon_url=member.avatar)
+    log_embed.set_footer(text=footers[random_feet])
     roleAdd = member.guild.get_role(959023639062261770)
     
     if member_id == user:
@@ -104,8 +106,9 @@ async def assign_error(ctx, error):
 
 @bot.command(name='whois', aliases=['who'])
 async def whois(ctx, member: discord.Member = None):
+    random_feet = random.randrange(len(footers))
     if not member: # Shows message author's info when no target is specified.
-        member = ctx.message.author  
+        member = ctx.message.author 
 
     # ━━━Fetches current time and date, as well as date when a user created an account and joined the server.━━
     now = datetime.datetime.now().date()
@@ -117,10 +120,10 @@ async def whois(ctx, member: discord.Member = None):
     # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     roles = [role.mention for role in member.roles[1:]]
     embed = discord.Embed(color=0xffa07a, title=f'User info of {member}', timestamp=ctx.message.created_at)
-    embed.set_thumbnail(url=member.avatar_url)
+    embed.set_thumbnail(url = member.avatar)
     embed.add_field(name='User ID:', value=member.id, inline=False)
     embed.add_field(name='Display name:', value=member.display_name)
-    embed.add_field(name="Avatar", value=f'[Link]({member.avatar_url})', inline=False)
+    embed.add_field(name="Avatar", value=f'[Link]({member.avatar})', inline=False)
     embed.add_field(name='Joined at:',
                     value=member.joined_at.strftime(f"%a, %#d %B %Y, %I:%M %p UTC ({j_diff} days ago)"),
                     inline=False)
@@ -139,13 +142,13 @@ async def whois(ctx, member: discord.Member = None):
         embed.add_field(name='Bot/Human:', value='Bot', inline=True)
     else:
         embed.add_field(name='Bot/Human:', value='Human', inline=True)
-    embed.set_footer(text='please help me')
+    embed.set_footer(text=footers[random_feet])
     await ctx.message.reply(embed=embed)
 
 
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
-        bot.load_extension(f'cogs.{filename[:-3]}')
+     bot.load_extension(f'cogs.{filename[:-3]}')
     
 
 bot.run(os.getenv("TOKEN"))
