@@ -114,26 +114,34 @@ async def guest(ctx, member: discord.Member):
     rulez = int(os.getenv("RULES"))
     rolez = int(os.getenv("ROLES"))
     log_channel = bot.get_channel(int(os.getenv("LOGS")))
-    log_embed = discord.Embed(timestamp=ctx.message.created_at, description=
-                              f'**{member}** ({member.id}) was let into the server as a Guest\n \nGod help us all',
-                              color=0xfdcf92)
     log_embed.set_author(name=f'{ctx.message.author} ({ctx.message.author.id})', icon_url=member.avatar)
     roleYeet = member.guild.get_role(int(os.getenv("ROLEYEET")))
-    roleAdd = member.guild.get_role(int(os.getenv("ROLEADD")))
+    roleAdd = member.guild.get_role(int(os.getenv("GUEST")))
+    mem = member.guild.get_role(int(os.getenv("ROLEADD")))
     if member_id == user:
         await ctx.message.add_reaction("❌")
         await ctx.send("retard you can't use it on yourself")
     elif roleAdd in member.roles:
         await ctx.message.add_reaction("❌")
         await ctx.send("user already has access to the server you ape")
+    elif mem in member.roles:
+        await member.remove_roles(mem)
+        await member.add_roles(roleAdd)
+        log_embed = discord.Embed(timestamp=ctx.message.created_at, description=
+                              f'**{member}** ({member.id}) is now just a Guest\n \nlmao',
+                              color=0xfdcf92)
+        await ctx.message.add_reaction("✅")
     else:
         await member.remove_roles(roleYeet)
         await member.add_roles(roleAdd)
+        log_embed = discord.Embed(timestamp=ctx.message.created_at, description=
+                              f'**{member}** ({member.id}) was let into the server as a Guest\n \nGod help us all',
+                              color=0xfdcf92)
         await ctx.send(f'K.\n' 
                        f"<@{member_id}> now has server access. Don't be a sperg kthx.\nAlso check <#{rulez}> and <#{rolez}>")
         await log_channel.send(embed=log_embed)
         await ctx.message.add_reaction("✅")
-@assign.error
+@guest.error
 async def guest_error(ctx, error):
     if isinstance(error, commands.CheckFailure):
         await ctx.send("You don't have perms to do that you dumbfuck")
