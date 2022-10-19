@@ -101,7 +101,7 @@ class Warframe(commands.Cog):
                     cetus_bounties = await bounties_request.json()
                     cetus_time = await request.json()
                     time_left = cetus_time["shortString"]
-                    ostron_syndicate = cetus_bounties[0]
+                    ostron_syndicate = cetus_bounties[21]
                     if cetus_time["isDay"]:
                         cetus_embed.add_field(name="☀ It's Day!",
                                               value=f"```asciidoc\n= Time Remaining =\n{time_left}\n```", inline=False)
@@ -132,7 +132,7 @@ class Warframe(commands.Cog):
                 async with session.get("https://api.warframestat.us/pc/syndicateMissions") as bounties_request:
                     vallis_time = await request.json()
                     vallis_bounties = await bounties_request.json()
-                    vallis_syndicate = vallis_bounties[2]
+                    vallis_syndicate = vallis_bounties[23]
                     time_left = vallis_time["shortString"]
                     if vallis_time["isWarm"]:
                         vallis_embed.add_field(name="🔥 It's Warm! 🔥",
@@ -163,7 +163,7 @@ class Warframe(commands.Cog):
             async with session.get("https://api.warframestat.us/pc/cambionCycle") as request:
                 async with session.get("https://api.warframestat.us/pc/syndicateMissions") as bounties_request:
                     cambion_bounties = await bounties_request.json()
-                    cambion_syndicate = cambion_bounties[1]
+                    cambion_syndicate = cambion_bounties[21]
                     cycle = await request.json()
                     if cycle["active"] == "vome":
                         cambion_embed.add_field(name='🔹Vome🔹', value=f'```asciidoc\n= Time Remaining =\n{cycle["timeLeft"]}```', inline=False)
