@@ -232,8 +232,6 @@ class Warframe(commands.Cog):
                             else:
                                 embed = discord.Embed(title=f'Riven info for: {wepinfo["unrolled"]["compatibility"]}', color=0xa45ee5, 
                                 timestamp=ctx.message.created_at)
-                                if not "veiled" in name.lower():
-                                    embed.add_field(name="More info about this Riven:", value=f"[Click Me]({'https://semlar.com/rivenprices/'+name.lower()})")
                                 embed.add_field(name='Unrolled', 
                                 value=f'Average value: {round(wepinfo["unrolled"]["avg"])} <:Platinum:573969761919303720>'
                                 f'\nMin Price: {wepinfo["unrolled"]["min"]} <:Platinum:573969761919303720>'
@@ -245,6 +243,8 @@ class Warframe(commands.Cog):
                                 f'\nMin Price: {wepinfo["rerolled"]["min"]} <:Platinum:573969761919303720>'
                                 f'\nMax Price: {wepinfo["rerolled"]["max"]} <:Platinum:573969761919303720>'
                                 f'\nMedian Price: {wepinfo["rerolled"]["median"]} <:Platinum:573969761919303720>', inline=False)
+                                if not "veiled" in name.lower(): # Unless riven is Veiled, give link to relevant page on semlar.com
+                                    embed.add_field(name="More info about this Riven:", value=f"[Click Me]({'https://semlar.com/rivenprices/'+name.lower()})", inline=False)
                                 embed.add_field(name="⚠️All info comes from Trade Chat via Warframe's own API. \nBot does not take warframe.market and riven.market into account.", value='\u200b')
 
                             embed.set_thumbnail(url="attachment://samo.webp")
