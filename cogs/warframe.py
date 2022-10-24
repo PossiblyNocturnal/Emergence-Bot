@@ -227,7 +227,8 @@ class Warframe(commands.Cog):
                                 value=f'Average value: {round(wepinfo["unrolled"]["avg"])} <:Platinum:573969761919303720>'
                                 f'\nMin Price: {wepinfo["unrolled"]["min"]} <:Platinum:573969761919303720>'
                                 f'\nMax Price: {wepinfo["unrolled"]["max"]} <:Platinum:573969761919303720>'
-                                f'\nMedian Price: {wepinfo["unrolled"]["median"]} <:Platinum:573969761919303720>')
+                                f'\nMedian Price: {wepinfo["unrolled"]["median"]} <:Platinum:573969761919303720>', inline=False)
+                                embed.add_field(name="⚠️All info comes from Trade Chat via Warframe's API. \nBot does not take warframe.market and riven.market into account", value='\u200b')
                             else:
                                 embed = discord.Embed(title=f'Riven info for: {wepinfo["unrolled"]["compatibility"]}', color=0xa45ee5, 
                                 timestamp=ctx.message.created_at)
@@ -242,6 +243,7 @@ class Warframe(commands.Cog):
                                 f'\nMin Price: {wepinfo["rerolled"]["min"]} <:Platinum:573969761919303720>'
                                 f'\nMax Price: {wepinfo["rerolled"]["max"]} <:Platinum:573969761919303720>'
                                 f'\nMedian Price: {wepinfo["rerolled"]["median"]} <:Platinum:573969761919303720>', inline=False)
+                                embed.add_field(name="⚠️All info comes from Trade Chat via Warframe's own API. \nBot does not take warframe.market and riven.market into account", value='\u200b')
 
                             embed.set_thumbnail(url="attachment://samo.webp")
                             embed.set_footer(text=self.funne[randfunne])
