@@ -3,6 +3,7 @@ from discord.ext import commands
 from datetime import datetime
 import aiohttp
 import random
+from fuzzywuzzy import fuzz
 
 
 class Warframe(commands.Cog):
@@ -206,6 +207,45 @@ class Warframe(commands.Cog):
                 sortie_embed.set_thumbnail(url="attachment://sortie.png")
                 sortie_embed.set_footer(text=self.funne[randfunne])
                 await ctx.send(file=emblem, embed=sortie_embed)
+        await session.close()
+
+    @commands.command(name="riven", aliases=["riv"])
+    async def riven(self, ctx, *, name):
+        randfunne = random.randrange(len(self.funne))
+        emblem = discord.File("images/Samodeus.webp", filename="samo.webp")
+        async with aiohttp.ClientSession() as session:
+            async with session.get("https://api.warframestat.us/pc/rivens") as request:
+                rivens = await request.json()
+                for query in rivens:
+                    for wep in rivens[query]:
+                        if fuzz.token_sort_ratio(name.split()[:2], wep.split()[:2]) == 100: # Only compare first 2 words so people don't have to type "Veiled Archgun Riven Mod" and could just type "Veiled Archgun"
+                            wepinfo = rivens[query][wep]
+                            if "veiled" in name.lower(): # Veiled rivens don't have rerolled info so no need to parse unrolled info
+                                embed = discord.Embed(title=f'Riven info for: {wepinfo["unrolled"]["compatibility"]}', color=0xa45ee5, 
+                                timestamp=ctx.message.created_at)
+                                embed.add_field(name=wepinfo["unrolled"]["compatibility"], 
+                                value=f'Average value: {round(wepinfo["unrolled"]["avg"])} <:Platinum:573969761919303720>'
+                                f'\nMin Price: {wepinfo["unrolled"]["min"]} <:Platinum:573969761919303720>'
+                                f'\nMax Price: {wepinfo["unrolled"]["max"]} <:Platinum:573969761919303720>'
+                                f'\nMedian Price: {wepinfo["unrolled"]["median"]} <:Platinum:573969761919303720>')
+                            else:
+                                embed = discord.Embed(title=f'Riven info for: {wepinfo["unrolled"]["compatibility"]}', color=0xa45ee5, 
+                                timestamp=ctx.message.created_at)
+                                embed.add_field(name='Unrolled', 
+                                value=f'Average value: {round(wepinfo["unrolled"]["avg"])} <:Platinum:573969761919303720>'
+                                f'\nMin Price: {wepinfo["unrolled"]["min"]} <:Platinum:573969761919303720>'
+                                f'\nMax Price: {wepinfo["unrolled"]["max"]} <:Platinum:573969761919303720>'
+                                f'\nMedian Price: {wepinfo["unrolled"]["median"]} <:Platinum:573969761919303720>', inline=False)
+
+                                embed.add_field(name=f'Rerolled', 
+                                value=f'Average value: {round(wepinfo["rerolled"]["avg"])} <:Platinum:573969761919303720>'
+                                f'\nMin Price: {wepinfo["rerolled"]["min"]} <:Platinum:573969761919303720>'
+                                f'\nMax Price: {wepinfo["rerolled"]["max"]} <:Platinum:573969761919303720>'
+                                f'\nMedian Price: {wepinfo["rerolled"]["median"]} <:Platinum:573969761919303720>', inline=False)
+
+                            embed.set_thumbnail(url="attachment://samo.webp")
+                            embed.set_footer(text=self.funne[randfunne])
+                            await ctx.send(file=emblem, embed=embed)
         await session.close()
 
 
