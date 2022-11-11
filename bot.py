@@ -196,5 +196,8 @@ async def whois(ctx, member: discord.Member = None):
     embed.set_footer(text=footers[random_feet])
     await ctx.message.reply(embed=embed)
 
+@bot.hybrid_command()
+async def lol(ctx):
+    await ctx.send("I have relationships with women, and sex with men")
 
 bot.run(os.getenv("TOKEN"))
