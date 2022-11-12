@@ -5,6 +5,7 @@ import random
 import os
 from dotenv import load_dotenv
 from discord.ext import commands
+from discord import app_commands
 
 
 intents = discord.Intents().all()
@@ -18,9 +19,9 @@ async def load_cogs():
         if filename.endswith(".py"):
             await bot.load_extension(f'cogs.{filename[:-3]}')
 
-
 @bot.event
 async def on_ready():
+    await bot.tree.sync()
     await bot.wait_until_ready()
     await load_cogs()
     print("aaa")
@@ -33,6 +34,9 @@ async def on_message(message):
         await message.channel.send(mean_messages[random_index])
     await bot.process_commands(message)
 
+@bot.tree.command(name = "ping", description = "what do you think lol")
+async def ping(interaction: discord.Interaction):
+    await interaction.response.send_message(f"Latency: {round(bot.latency * 1000)} ms")
 
 @bot.command(name="assign")
 @commands.has_permissions(manage_roles=True)
@@ -195,9 +199,5 @@ async def whois(ctx, member: discord.Member = None):
         embed.add_field(name='Bot/Human:', value='Human', inline=True)
     embed.set_footer(text=footers[random_feet])
     await ctx.message.reply(embed=embed)
-
-@bot.hybrid_command()
-async def lol(ctx):
-    await ctx.send("I have relationships with women, and sex with men")
 
 bot.run(os.getenv("TOKEN"))
