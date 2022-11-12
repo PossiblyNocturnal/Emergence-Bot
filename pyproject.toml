@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "notray"
+version = "1.0.0"
+description = "A discord bot, a really bad one"
+authors = ["CephieCodesStuff <yourlittlecephalon@protonmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+discord-py = {extras = ["voice"], version = "^2.1.0"}
+python-dotenv = "^0.21.0"
+fuzzywuzzy = "^0.18.0"
+python-levenshtein = "^0.20.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
