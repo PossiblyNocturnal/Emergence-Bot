@@ -11,6 +11,7 @@ discord-py = {extras = ["voice"], version = "^2.1.0"}
 python-dotenv = "^0.21.0"
 fuzzywuzzy = "^0.18.0"
 python-levenshtein = "^0.20.8"
+black = "^22.10.0"
 
 
 [build-system]
