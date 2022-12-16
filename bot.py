@@ -1,4 +1,3 @@
-import asyncio
 import discord
 import datetime
 import random
@@ -26,7 +25,7 @@ footers = [
     "hhh",
     "awa awa",
     "stop",
-    "192.168.1.15",
+    "192.168.1.15, get doxxed",
 ]
 
 
@@ -55,6 +54,150 @@ async def on_message(message):
 @bot.tree.command(name="ping", description="what do you think lol")
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message(f"Latency: {round(bot.latency * 1000)} ms")
+
+
+@bot.group(invoke_without_command=True)
+async def help(ctx):
+    random_feet = random.randrange(len(footers))
+    em = discord.Embed(
+        title="Available Commands",
+        description="Use >help `command` to get more info",
+        color=0xDB9A7E,
+    )
+    em.add_field(
+        name="Warframe stuff",
+        value="news\n nightwave\n baro\n cetus\n vallis\n cambion\n sortie\n riven\n",
+    )
+    em.add_field(name="Misc", value="whois")
+    em.set_footer(text=footers[random_feet])
+
+    await ctx.send(embed=em)
+
+
+@help.command(aliases=["who"])
+async def whois(ctx):
+    em = discord.Embed(
+        title=">whois",
+        description="Provides basic info about a user. If no argument is provided, shows info about you.\n **DOES NOT SHOW INFO ABOUT USERS NOT ON THE SERVER**",
+        color=0xDB9A7E,
+    )
+    em.add_field(name="**Aliases**", value="who")
+    em.add_field(
+        name="**Usage**", value=">whois `@member`\n >whois `member_id`\n >whois"
+    )
+    random_feet = random.randrange(len(footers))
+    em.set_footer(text=footers[random_feet])
+    await ctx.send(embed=em)
+
+
+@help.command()
+async def news(ctx):
+    em = discord.Embed(
+        title=">news", description="Shows recent News from Warframe.", color=0x00DFFF
+    )
+    em.add_field(name="**Aliases**", value="news")
+    em.add_field(name="**Usage**", value=">news")
+    random_feet = random.randrange(len(footers))
+    em.set_footer(text=footers[random_feet])
+    await ctx.send(embed=em)
+
+
+@help.command(aliases=["nw"])
+async def nightwave(ctx):
+    em = discord.Embed(
+        title=">nightwave",
+        description="Shows current Nightwave Challenges.",
+        color=0x00DFFF,
+    )
+    em.add_field(name="**Aliases**", value="nw\n nightwave")
+    em.add_field(name="**Usage**", value=">nightwave")
+    random_feet = random.randrange(len(footers))
+    em.set_footer(text=footers[random_feet])
+    await ctx.send(embed=em)
+
+
+@help.command()
+async def baro(ctx):
+    em = discord.Embed(
+        title=">baro",
+        description="If Baro is present, shows his stock and location. Otherwise shows ETA.",
+        color=0x00DFFF,
+    )
+    em.add_field(name="**Aliases**", value="baro")
+    em.add_field(name="**Usage**", value=">baro")
+    random_feet = random.randrange(len(footers))
+    em.set_footer(text=footers[random_feet])
+    await ctx.send(embed=em)
+
+
+@help.command()
+async def vallis(ctx):
+    em = discord.Embed(
+        title=">vallis",
+        description="Shows Orb Vallis bounties and Time of Day.",
+        color=0x00DFFF,
+    )
+    em.add_field(name="**Aliases**", value="vallis")
+    em.add_field(name="**Usage**", value=">vallis")
+    random_feet = random.randrange(len(footers))
+    em.set_footer(text=footers[random_feet])
+    await ctx.send(embed=em)
+
+
+@help.command()
+async def cetus(ctx):
+    em = discord.Embed(
+        title=">cetus",
+        description="Shows Cetus bounties and Time of Day.",
+        color=0x00DFFF,
+    )
+    em.add_field(name="**Aliases**", value="cetus")
+    em.add_field(name="**Usage**", value=">cetus")
+    random_feet = random.randrange(len(footers))
+    em.set_footer(text=footers[random_feet])
+    await ctx.send(embed=em)
+
+
+@help.command()
+async def cambion(ctx):
+    em = discord.Embed(
+        title=">cambion",
+        description="Shows Cambion Drift bounties and Current Cycle.",
+        color=0x00DFFF,
+    )
+    em.add_field(name="**Aliases**", value="cambion")
+    em.add_field(name="**Usage**", value=">cambion")
+    random_feet = random.randrange(len(footers))
+    em.set_footer(text=footers[random_feet])
+    await ctx.send(embed=em)
+
+
+@help.command()
+async def sortie(ctx):
+    em = discord.Embed(
+        title=">sortie",
+        description="Shows current Sortie Missions and Modifiers.",
+        color=0x00DFFF,
+    )
+    em.add_field(name="**Aliases**", value="sortie")
+    em.add_field(name="**Usage**", value="sortie")
+    random_feet = random.randrange(len(footers))
+    em.set_footer(text=footers[random_feet])
+    await ctx.send(embed=em)
+
+
+@help.command(aliases=["riv"])
+async def riven(ctx):
+    em = discord.Embed(
+        title=">riven",
+        description="Shows info about Trade Chat Riven Prices",
+        color=0x00DFFF,
+    )
+    em.add_field(name="**Aliases**", value="riven\n riv")
+    em.add_field(name="**Usage**", value=">riven `Weapon Name`")
+    random_feet = random.randrange(len(footers))
+    em.set_footer(text=footers[random_feet])
+    await ctx.send(embed=em)
 
 
 @bot.command(name="assign")
