@@ -26,6 +26,7 @@ footers = [
     "awa awa",
     "stop",
     "192.168.1.15, get doxxed",
+    "you should play va11 hall-a tbh"
 ]
 
 
