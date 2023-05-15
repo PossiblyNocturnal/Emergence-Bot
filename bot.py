@@ -4,11 +4,12 @@ import random
 import os
 from dotenv import load_dotenv
 from discord.ext import commands
-from discord import app_commands
+# from discord import app_commands
 
 
 intents = discord.Intents().all()
 load_dotenv()
+# noinspection PyTypeChecker
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(">"), intents=intents)
 bot.remove_command("help")
 mean_messages = [
@@ -79,7 +80,8 @@ async def help(ctx):
 async def whois(ctx):
     em = discord.Embed(
         title=">whois",
-        description="Provides basic info about a user. If no argument is provided, shows info about you.\n **DOES NOT SHOW INFO ABOUT USERS NOT ON THE SERVER**",
+        description="Provides basic info about a user. If no argument is provided, shows info about you.\n **DOES NOT "
+                    "SHOW INFO ABOUT USERS NOT ON THE SERVER**",
         color=0xDB9A7E,
     )
     em.add_field(name="**Aliases**", value="who")
@@ -372,14 +374,14 @@ async def whois(ctx, member: discord.Member = None):
     embed.add_field(name="Display name:", value=member.display_name)
     embed.add_field(name="Avatar", value=f"[Link]({member.avatar})", inline=False)
     embed.add_field(
-        name="Joined at:",
+        name="Server join date:",
         value=member.joined_at.strftime(
             f"%a, %#d %B %Y, %I:%M %p UTC ({j_diff} days ago)"
         ),
         inline=False,
     )
     embed.add_field(
-        name="Account created at:",
+        name="Account creation date:",
         value=member.created_at.strftime(
             f"%a, %#d %B %Y, %I:%M %p UTC ({c_diff} days ago)"
         ),
@@ -388,7 +390,7 @@ async def whois(ctx, member: discord.Member = None):
     embed.add_field(name="Roles:", value="   ".join(roles), inline=False)
     embed.add_field(name="Top role:", value=member.top_role.mention, inline=False)
     embed.add_field(name="Current status:", value=f"{member.status}", inline=True)
-    if member.activity == None:
+    if member.activity is None:
         embed.add_field(
             name="Current Activity:", value=member.activity, inline=True
         )  # Prevents NoneType error thingy(tm) when user has no activity set.
@@ -404,4 +406,4 @@ async def whois(ctx, member: discord.Member = None):
     await ctx.message.reply(embed=embed)
 
 
-bot.run(os.getenv("TOKEN"))
+bot.run(os.getenv("TEST_TOKEN"))
