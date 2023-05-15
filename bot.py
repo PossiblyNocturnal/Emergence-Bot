@@ -53,6 +53,8 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
+# noinspection PyUnresolvedReferences
+# idk why it bitches it works just fine
 @bot.tree.command(name="ping", description="what do you think lol")
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message(f"Latency: {round(bot.latency * 1000)} ms")
@@ -68,10 +70,10 @@ async def help(ctx):
     )
     em.add_field(
         name="Warframe stuff",
-        value="news\n nightwave\n baro\n cetus\n vallis\n cambion\n sortie\n riven\n",
+        value="```news\n nightwave\n baro\n cetus\n vallis\n cambion\n sortie\n riven\n```",
     )
     em.add_field(name="Misc", value="whois")
-    em.set_footer(text=footers[random_feet])
+    em.set_footer(text=footers[random_feet], icon_url=bot.user.avatar.url)
 
     await ctx.send(embed=em)
 
@@ -89,7 +91,7 @@ async def whois(ctx):
         name="**Usage**", value=">whois `@member`\n >whois `member_id`\n >whois"
     )
     random_feet = random.randrange(len(footers))
-    em.set_footer(text=footers[random_feet])
+    em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
 
 
@@ -115,7 +117,7 @@ async def nightwave(ctx):
     em.add_field(name="**Aliases**", value="nw\n nightwave")
     em.add_field(name="**Usage**", value=">nightwave")
     random_feet = random.randrange(len(footers))
-    em.set_footer(text=footers[random_feet])
+    em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
 
 
@@ -129,7 +131,7 @@ async def baro(ctx):
     em.add_field(name="**Aliases**", value="baro")
     em.add_field(name="**Usage**", value=">baro")
     random_feet = random.randrange(len(footers))
-    em.set_footer(text=footers[random_feet])
+    em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
 
 
@@ -143,7 +145,7 @@ async def vallis(ctx):
     em.add_field(name="**Aliases**", value="vallis")
     em.add_field(name="**Usage**", value=">vallis")
     random_feet = random.randrange(len(footers))
-    em.set_footer(text=footers[random_feet])
+    em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
 
 
@@ -157,7 +159,7 @@ async def cetus(ctx):
     em.add_field(name="**Aliases**", value="cetus")
     em.add_field(name="**Usage**", value=">cetus")
     random_feet = random.randrange(len(footers))
-    em.set_footer(text=footers[random_feet])
+    em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
 
 
@@ -171,7 +173,7 @@ async def cambion(ctx):
     em.add_field(name="**Aliases**", value="cambion")
     em.add_field(name="**Usage**", value=">cambion")
     random_feet = random.randrange(len(footers))
-    em.set_footer(text=footers[random_feet])
+    em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
 
 
@@ -185,7 +187,7 @@ async def sortie(ctx):
     em.add_field(name="**Aliases**", value="sortie")
     em.add_field(name="**Usage**", value="sortie")
     random_feet = random.randrange(len(footers))
-    em.set_footer(text=footers[random_feet])
+    em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
 
 
@@ -199,7 +201,7 @@ async def riven(ctx):
     em.add_field(name="**Aliases**", value="riven\n riv")
     em.add_field(name="**Usage**", value=">riven `Weapon Name`")
     random_feet = random.randrange(len(footers))
-    em.set_footer(text=footers[random_feet])
+    em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
 
 
@@ -219,18 +221,18 @@ async def assign(ctx, member: discord.Member):
     log_embed.set_author(
         name=f"{ctx.message.author} ({ctx.message.author.id})", icon_url=member.avatar
     )
-    roleYeet = member.guild.get_role(int(os.getenv("ROLEYEET")))
-    roleAdd = member.guild.get_role(int(os.getenv("ROLEADD")))
+    role_yeet = member.guild.get_role(int(os.getenv("ROLEYEET")))
+    role_add = member.guild.get_role(int(os.getenv("ROLEADD")))
     guest = member.guild.get_role(int(os.getenv("GUEST")))
     if member_id == user:
         await ctx.message.add_reaction("❌")
         await ctx.send("retard you can't use it on yourself")
-    elif roleAdd in member.roles:
+    elif role_add in member.roles:
         await ctx.message.add_reaction("❌")
         await ctx.send("user already has access to the server you ape")
     else:
-        await member.remove_roles(roleYeet, guest)
-        await member.add_roles(roleAdd)
+        await member.remove_roles(role_yeet, guest)
+        await member.add_roles(role_add)
         await ctx.send(
             f"K.\n"
             f"<@{member_id}> now has server access. Don't be a sperg kthx.\nAlso check <#{rulez}> and <#{rolez}>"
@@ -266,15 +268,15 @@ async def yeet(ctx, member: discord.Member):
         name=f"{ctx.message.author} ({ctx.message.author.id})", icon_url=member.avatar
     )
     log_embed.set_footer(text=footers[random_feet])
-    roleAdd = member.guild.get_role(int(os.getenv("ROLEYEET")))
-    roleYeet = member.guild.get_role(int(os.getenv("ROLEADD")))
+    role_add = member.guild.get_role(int(os.getenv("ROLEYEET")))
+    role_yeet = member.guild.get_role(int(os.getenv("ROLEADD")))
     guest = member.guild.get_role(int(os.getenv("GUEST")))
     if member_id == user:
         await ctx.message.add_reaction("❌")
         await ctx.send("retard you can't use it on yourself")
     else:
-        await member.add_roles(roleAdd)
-        await member.remove_roles(roleYeet, guest)
+        await member.add_roles(role_add)
+        await member.remove_roles(role_yeet, guest)
         await log_channel.send(embed=log_embed)
         await ctx.message.add_reaction("✅")
         await ctx.send("K.\n" f"{member.mention} was thrown back to <#{channel}>")
@@ -298,18 +300,18 @@ async def guest(ctx, member: discord.Member):
     rulez = int(os.getenv("RULES"))
     rolez = int(os.getenv("ROLES"))
     log_channel = bot.get_channel(int(os.getenv("LOGS")))
-    roleYeet = member.guild.get_role(int(os.getenv("ROLEYEET")))
-    roleAdd = member.guild.get_role(int(os.getenv("GUEST")))
+    role_yeet = member.guild.get_role(int(os.getenv("ROLEYEET")))
+    role_add = member.guild.get_role(int(os.getenv("GUEST")))
     mem = member.guild.get_role(int(os.getenv("ROLEADD")))
     if member_id == user:
         await ctx.message.add_reaction("❌")
         await ctx.send("retard you can't use it on yourself")
-    elif roleAdd in member.roles:
+    elif role_add in member.roles:
         await ctx.message.add_reaction("❌")
         await ctx.send("user already has access to the server you ape")
     elif mem in member.roles:
         await member.remove_roles(mem)
-        await member.add_roles(roleAdd)
+        await member.add_roles(role_add)
         log_embed = discord.Embed(
             timestamp=ctx.message.created_at,
             description=f"**{member}** ({member.id}) is now just a Guest\n \nlmao",
@@ -323,8 +325,8 @@ async def guest(ctx, member: discord.Member):
         await ctx.send(f"K <@{member_id}> is a Guest now")
         await log_channel.send(embed=log_embed)
     else:
-        await member.remove_roles(roleYeet)
-        await member.add_roles(roleAdd)
+        await member.remove_roles(role_yeet)
+        await member.add_roles(role_add)
         log_embed = discord.Embed(
             timestamp=ctx.message.created_at,
             description=f"**{member}** ({member.id}) was let into the server as a Guest\n \nGod help us all",
@@ -402,7 +404,7 @@ async def whois(ctx, member: discord.Member = None):
         embed.add_field(name="Bot/Human:", value="Bot", inline=True)
     else:
         embed.add_field(name="Bot/Human:", value="Human", inline=True)
-    embed.set_footer(text=footers[random_feet])
+    embed.set_footer(text=footers[random_feet], icon_url=bot.user.avatar.url)
     await ctx.message.reply(embed=embed)
 
 
