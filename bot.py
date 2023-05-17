@@ -4,6 +4,7 @@ import random
 import os
 from dotenv import load_dotenv
 from discord.ext import commands
+
 # from discord import app_commands
 
 
@@ -83,7 +84,7 @@ async def whois(ctx):
     em = discord.Embed(
         title=">whois",
         description="Provides basic info about a user. If no argument is provided, shows info about you.\n **DOES NOT "
-                    "SHOW INFO ABOUT USERS NOT ON THE SERVER**",
+        "SHOW INFO ABOUT USERS NOT ON THE SERVER**",
         color=0xDB9A7E,
     )
     em.add_field(name="**Aliases**", value="who")
