@@ -25,8 +25,8 @@ footers = [
     "hhh",
     "awa awa",
     "stop",
-    "192.168.1.15, get doxxed",
-    "you should play va11 hall-a tbh"
+    "192.168.0.1 get doxxed loser",
+    "you should play va11 hall-a tbh",
 ]
 
 
@@ -52,7 +52,7 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
-@bot.tree.command(name="ping", description="what do you think lol")
+@bot.tree.command(name="ping", description="what do you think it does lol")
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message(f"Latency: {round(bot.latency * 1000)} ms")
 
