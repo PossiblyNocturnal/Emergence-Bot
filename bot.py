@@ -18,6 +18,7 @@ mean_messages = [
     "this is harassment",
     "you want to get sued mate?",
     "banned",
+    "keep yourself safe:)"
 ]
 footers = [
     "pain",
