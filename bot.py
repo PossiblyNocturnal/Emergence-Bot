@@ -11,7 +11,7 @@ from discord.ext import commands
 intents = discord.Intents().all()
 load_dotenv()
 # noinspection PyTypeChecker
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(">"), intents=intents)
+bot = commands.Bot(command_prefix=">", intents=intents)
 bot.remove_command("help")
 mean_messages = [
     "how about you ping some bitches instead",
@@ -52,6 +52,10 @@ async def on_message(message):
     if bot.user.mentioned_in(message):
         random_index = random.randrange(len(mean_messages))
         await message.channel.send(mean_messages[random_index])
+    elif message.channel.id == 1114616725460222044 and message.author.id != bot.user.id:
+        if message.content.join(message.content.split()) != "🌮":
+            await message.delete()
+            await message.channel.send(f"<@{message.author.id}> retard you broke the 🌮 chain")
     await bot.process_commands(message)
 
 
@@ -72,9 +76,9 @@ async def help(ctx):
     )
     em.add_field(
         name="Warframe stuff",
-        value="```news\n nightwave\n baro\n cetus\n vallis\n cambion\n sortie\n riven\n```",
+        value="`news\nnightwave\nbaro\ncetus\nvallis\ncambion\nsortie\nriven\n`",
     )
-    em.add_field(name="Misc", value="whois")
+    em.add_field(name="Misc", value="`whois\n8ball`")
     em.set_footer(text=footers[random_feet], icon_url=bot.user.avatar.url)
 
     await ctx.send(embed=em)
@@ -96,6 +100,21 @@ async def whois(ctx):
     em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
 
+
+@help.command(aliases=["8ball"])
+async def _8ball(ctx):
+    em = discord.Embed(
+        title=">8ball",
+        description="Do I really need to tell you what 8ball does? Come on",
+        color=0xDB9A7E,
+    )
+    em.add_field(name="**Aliases**", value="8ball")
+    em.add_field(
+        name="**Usage**", value=">8ball your question"
+    )
+    random_feet = random.randrange(len(footers))
+    em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
+    await ctx.send(embed=em)
 
 @help.command()
 async def news(ctx):
@@ -206,14 +225,38 @@ async def riven(ctx):
     em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
 
+@bot.command(aliases=['8ball'])  # Literally just a  boring 8ball command.
+async def _8ball(ctx):
+    responses = ['It is certain.',
+                 'It is decidedly so.',
+                 'Without a doubt.',
+                 'Yes - definitely.',
+                 'You may rely on it.',
+                 'As I see it, yes.',
+                 'Most likely.',
+                 'Outlook good.',
+                 'Yes.',
+                 'Signs point to yes.',
+                 'Reply hazy, try again.',
+                 'Ask again later.',
+                 'Better not tell you now.',
+                 'Cannot predict now.',
+                 'Concentrate and ask again.',
+                 "Don't count on it.",
+                 'My reply is no.',
+                 'My sources say no.',
+                 'Outlook not so good.',
+                 'Very doubtful.']
+    await ctx.message.reply(f"Answer: {random.choice(responses)}")
+
 
 @bot.command(name="assign")
 @commands.has_permissions(manage_roles=True)
 async def assign(ctx, member: discord.Member):
     user = ctx.message.author.id
     member_id = member.id
-    rolez = int(os.getenv("ROLES"))
-    rulez = int(os.getenv("RULES"))
+    # rolez = int(os.getenv("ROLES"))
+    # rulez = int(os.getenv("RULES"))
     log_channel = bot.get_channel(int(os.getenv("LOGS")))
     log_embed = discord.Embed(
         timestamp=ctx.message.created_at,
@@ -225,7 +268,6 @@ async def assign(ctx, member: discord.Member):
     )
     role_yeet = member.guild.get_role(int(os.getenv("ROLEYEET")))
     role_add = member.guild.get_role(int(os.getenv("ROLEADD")))
-    guest = member.guild.get_role(int(os.getenv("GUEST")))
     if member_id == user:
         await ctx.message.add_reaction("❌")
         await ctx.send("retard you can't use it on yourself")
@@ -233,11 +275,11 @@ async def assign(ctx, member: discord.Member):
         await ctx.message.add_reaction("❌")
         await ctx.send("user already has access to the server you ape")
     else:
-        await member.remove_roles(role_yeet, guest)
+        await member.remove_roles(role_yeet)
         await member.add_roles(role_add)
         await ctx.send(
             f"K.\n"
-            f"<@{member_id}> now has server access. Don't be a sperg kthx.\nAlso check <#{rulez}> and <#{rolez}>"
+            f"<@{member_id}> now has server access. Don't be a sperg kthx."
         )
         await log_channel.send(embed=log_embed)
         await ctx.message.add_reaction("✅")
@@ -271,14 +313,13 @@ async def yeet(ctx, member: discord.Member):
     )
     log_embed.set_footer(text=footers[random_feet])
     role_add = member.guild.get_role(int(os.getenv("ROLEYEET")))
-    role_yeet = member.guild.get_role(int(os.getenv("ROLEADD")))
-    guest = member.guild.get_role(int(os.getenv("GUEST")))
     if member_id == user:
         await ctx.message.add_reaction("❌")
         await ctx.send("retard you can't use it on yourself")
     else:
-        await member.add_roles(role_add)
-        await member.remove_roles(role_yeet, guest)
+        for role in member.roles[1:]:
+            await member.remove_roles(role)
+            await member.add_roles(role_add)
         await log_channel.send(embed=log_embed)
         await ctx.message.add_reaction("✅")
         await ctx.send("K.\n" f"{member.mention} was thrown back to <#{channel}>")
@@ -286,68 +327,6 @@ async def yeet(ctx, member: discord.Member):
 
 @yeet.error
 async def yeet_error(ctx, error):
-    if isinstance(error, commands.CheckFailure):
-        await ctx.send("You don't have perms to do that you dumbfuck")
-    else:
-        print(error)
-        await ctx.message.add_reaction("❌")
-        await ctx.send("eee fix that shit <@223478168399511562>")
-
-
-@bot.command(name="guest")
-@commands.has_permissions(manage_roles=True)
-async def guest(ctx, member: discord.Member):
-    user = ctx.message.author.id
-    member_id = member.id
-    rulez = int(os.getenv("RULES"))
-    rolez = int(os.getenv("ROLES"))
-    log_channel = bot.get_channel(int(os.getenv("LOGS")))
-    role_yeet = member.guild.get_role(int(os.getenv("ROLEYEET")))
-    role_add = member.guild.get_role(int(os.getenv("GUEST")))
-    mem = member.guild.get_role(int(os.getenv("ROLEADD")))
-    if member_id == user:
-        await ctx.message.add_reaction("❌")
-        await ctx.send("retard you can't use it on yourself")
-    elif role_add in member.roles:
-        await ctx.message.add_reaction("❌")
-        await ctx.send("user already has access to the server you ape")
-    elif mem in member.roles:
-        await member.remove_roles(mem)
-        await member.add_roles(role_add)
-        log_embed = discord.Embed(
-            timestamp=ctx.message.created_at,
-            description=f"**{member}** ({member.id}) is now just a Guest\n \nlmao",
-            color=0xFDCF92,
-        )
-        log_embed.set_author(
-            name=f"{ctx.message.author} ({ctx.message.author.id})",
-            icon_url=member.avatar,
-        )
-        await ctx.message.add_reaction("✅")
-        await ctx.send(f"K <@{member_id}> is a Guest now")
-        await log_channel.send(embed=log_embed)
-    else:
-        await member.remove_roles(role_yeet)
-        await member.add_roles(role_add)
-        log_embed = discord.Embed(
-            timestamp=ctx.message.created_at,
-            description=f"**{member}** ({member.id}) was let into the server as a Guest\n \nGod help us all",
-            color=0xFDCF92,
-        )
-        log_embed.set_author(
-            name=f"{ctx.message.author} ({ctx.message.author.id})",
-            icon_url=member.avatar,
-        )
-        await ctx.send(
-            f"K.\n"
-            f"<@{member_id}> now has server access. Don't be a sperg kthx.\nAlso check <#{rulez}> and <#{rolez}>"
-        )
-        await log_channel.send(embed=log_embed)
-        await ctx.message.add_reaction("✅")
-
-
-@guest.error
-async def guest_error(ctx, error):
     if isinstance(error, commands.CheckFailure):
         await ctx.send("You don't have perms to do that you dumbfuck")
     else:
@@ -410,4 +389,4 @@ async def whois(ctx, member: discord.Member = None):
     await ctx.message.reply(embed=embed)
 
 
-bot.run(os.getenv("TEST_TOKEN"))
+bot.run(os.getenv("TOKEN"))
