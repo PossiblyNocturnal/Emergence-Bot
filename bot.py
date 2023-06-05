@@ -4,6 +4,7 @@ import random
 import os
 from dotenv import load_dotenv
 from discord.ext import commands
+import re
 
 # from discord import app_commands
 
@@ -53,9 +54,12 @@ async def on_message(message):
         random_index = random.randrange(len(mean_messages))
         await message.channel.send(mean_messages[random_index])
     elif message.channel.id == 1114616725460222044 and message.author.id != bot.user.id:
-        if message.content.join(message.content.split()) != "🌮":
+        taco_check = re.compile(r'🌮')
+        if (taco_check.match(message.content)):
+            pass
+        else:
             await message.delete()
-            await message.channel.send(f"<@{message.author.id}> retard you broke the 🌮 chain")
+            await message.channel.send(f"<@{message.author.id}> retard you broke the 🌮 chain", delete_after=5)
     await bot.process_commands(message)
 
 
@@ -389,4 +393,4 @@ async def whois(ctx, member: discord.Member = None):
     await ctx.message.reply(embed=embed)
 
 
-bot.run(os.getenv("TOKEN"))
+bot.run(os.getenv("TEST_TOKEN"))
