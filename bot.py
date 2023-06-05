@@ -45,7 +45,7 @@ async def on_ready():
     await bot.tree.sync()
     await bot.wait_until_ready()
     await load_cogs()
-    print("aaa")
+    print(f"Okay, logged in as {bot.name}")
 
 
 @bot.event
@@ -393,4 +393,4 @@ async def whois(ctx, member: discord.Member = None):
     await ctx.message.reply(embed=embed)
 
 
-bot.run(os.getenv("TEST_TOKEN"))
+bot.run(os.getenv("TOKEN"))
