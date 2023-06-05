@@ -392,4 +392,4 @@ async def whois(ctx, member: discord.Member = None):
     await ctx.message.reply(embed=embed)
 
 
-bot.run(os.getenv("TEST_TOKEN"))
+bot.run(os.getenv("TOKEN"))
