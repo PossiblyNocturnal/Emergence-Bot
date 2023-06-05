@@ -43,9 +43,8 @@ async def load_cogs():
 @bot.event
 async def on_ready():
     await bot.tree.sync()
-    await bot.wait_until_ready()
     await load_cogs()
-    print("aaa")
+    print(f"k logged in as: {bot.user}")
 
 
 @bot.event
