@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 from discord.ext import commands
 import re
+import asyncio
 
 # from discord import app_commands
 
@@ -19,7 +20,7 @@ mean_messages = [
     "this is harassment",
     "you want to get sued mate?",
     "banned",
-    "keep yourself safe:)"
+    "keep yourself safe:)",
 ]
 footers = [
     "pain",
@@ -43,9 +44,8 @@ async def load_cogs():
 @bot.event
 async def on_ready():
     await bot.tree.sync()
-    await bot.wait_until_ready()
     await load_cogs()
-    print("aaa")
+    print(f"k logged in as {bot.user}")
 
 
 @bot.event
@@ -53,13 +53,19 @@ async def on_message(message):
     if bot.user.mentioned_in(message):
         random_index = random.randrange(len(mean_messages))
         await message.channel.send(mean_messages[random_index])
-    elif message.channel.id == 1114616725460222044 and message.author.id != bot.user.id:
-        taco_check = re.compile(r'🌮')
-        if (taco_check.match(message.content)):
+    elif message.channel.id == 1114616834591838258 and message.author.id != bot.user.id:
+        taco_check = re.compile(r"🌮")
+        if taco_check.match(message.content):
             pass
         else:
+            retard_role = discord.utils.get(message.guild.roles, name="tacoless and bitchless")
+            await message.author.add_roles(retard_role)
             await message.delete()
-            await message.channel.send(f"<@{message.author.id}> retard you broke the 🌮 chain", delete_after=5)
+            await message.channel.send(
+                f"<@{message.author.id}> retard you broke the 🌮 chain", delete_after=5
+            )
+            await asyncio.sleep(300)
+            await message.author.remove_roles(retard_role)
     await bot.process_commands(message)
 
 
@@ -113,12 +119,11 @@ async def _8ball(ctx):
         color=0xDB9A7E,
     )
     em.add_field(name="**Aliases**", value="8ball")
-    em.add_field(
-        name="**Usage**", value=">8ball your question"
-    )
+    em.add_field(name="**Usage**", value=">8ball your question")
     random_feet = random.randrange(len(footers))
     em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
+
 
 @help.command()
 async def news(ctx):
@@ -229,28 +234,31 @@ async def riven(ctx):
     em.set_footer(text=footers[random_feet], icon_url=ctx.guild.icon.url)
     await ctx.send(embed=em)
 
-@bot.command(aliases=['8ball'])  # Literally just a  boring 8ball command.
+
+@bot.command(aliases=["8ball"])  # Literally just a  boring 8ball command.
 async def _8ball(ctx):
-    responses = ['It is certain.',
-                 'It is decidedly so.',
-                 'Without a doubt.',
-                 'Yes - definitely.',
-                 'You may rely on it.',
-                 'As I see it, yes.',
-                 'Most likely.',
-                 'Outlook good.',
-                 'Yes.',
-                 'Signs point to yes.',
-                 'Reply hazy, try again.',
-                 'Ask again later.',
-                 'Better not tell you now.',
-                 'Cannot predict now.',
-                 'Concentrate and ask again.',
-                 "Don't count on it.",
-                 'My reply is no.',
-                 'My sources say no.',
-                 'Outlook not so good.',
-                 'Very doubtful.']
+    responses = [
+        "It is certain.",
+        "It is decidedly so.",
+        "Without a doubt.",
+        "Yes - definitely.",
+        "You may rely on it.",
+        "As I see it, yes.",
+        "Most likely.",
+        "Outlook good.",
+        "Yes.",
+        "Signs point to yes.",
+        "Reply hazy, try again.",
+        "Ask again later.",
+        "Better not tell you now.",
+        "Cannot predict now.",
+        "Concentrate and ask again.",
+        "Don't count on it.",
+        "My reply is no.",
+        "My sources say no.",
+        "Outlook not so good.",
+        "Very doubtful.",
+    ]
     await ctx.message.reply(f"Answer: {random.choice(responses)}")
 
 
@@ -282,8 +290,7 @@ async def assign(ctx, member: discord.Member):
         await member.remove_roles(role_yeet)
         await member.add_roles(role_add)
         await ctx.send(
-            f"K.\n"
-            f"<@{member_id}> now has server access. Don't be a sperg kthx."
+            f"K.\n" f"<@{member_id}> now has server access. Don't be a sperg kthx."
         )
         await log_channel.send(embed=log_embed)
         await ctx.message.add_reaction("✅")
@@ -393,4 +400,4 @@ async def whois(ctx, member: discord.Member = None):
     await ctx.message.reply(embed=embed)
 
 
-bot.run(os.getenv("TEST_TOKEN"))
+bot.run(os.getenv("TOKEN"))
