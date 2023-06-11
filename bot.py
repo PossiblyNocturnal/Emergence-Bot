@@ -60,6 +60,11 @@ async def on_message(message):
             )
             await asyncio.sleep(300)
             await message.author.remove_roles(retard_role)
+    elif message.author.id == 320241358440759307 or message.author.id == 694913462760898580:
+        if message.author.id == 320241358440759307:
+            await message.add_reaction("🌮")
+        else:
+            await message.add_reaction("🐴")
     await bot.process_commands(message)
 
 
