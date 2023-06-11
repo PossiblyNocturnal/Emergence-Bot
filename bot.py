@@ -56,7 +56,7 @@ async def on_message(message):
             await message.author.add_roles(retard_role)
             await message.delete()
             await message.channel.send(
-                f"<@{message.author.id}> retar you broke the 🌮 chain", delete_after=5
+                f"<@{message.author.id}> retard you broke the 🌮 chain", delete_after=5
             )
             await asyncio.sleep(300)
             await message.author.remove_roles(retard_role)
