@@ -52,7 +52,9 @@ async def on_message(message):
         if taco_check.match(message.content):
             pass
         else:
-            retard_role = discord.utils.get(message.guild.roles, name="tacoless and bitchless")
+            retard_role = discord.utils.get(
+                message.guild.roles, name="tacoless and bitchless"
+            )
             await message.author.add_roles(retard_role)
             await message.delete()
             await message.channel.send(
@@ -60,7 +62,10 @@ async def on_message(message):
             )
             await asyncio.sleep(300)
             await message.author.remove_roles(retard_role)
-    elif message.author.id == 320241358440759307 or message.author.id == 694913462760898580:
+    elif (
+        message.author.id == 320241358440759307
+        or message.author.id == 694913462760898580
+    ):
         if message.author.id == 320241358440759307:
             await message.add_reaction("🌮")
         else:
@@ -397,6 +402,7 @@ async def whois(ctx, member: discord.Member = None):
         embed.add_field(name="Bot/Human:", value="Human", inline=True)
     embed.set_footer(text=footers[random_feet], icon_url=bot.user.avatar.url)
     await ctx.message.reply(embed=embed)
+
 
 async def load_cogs():
     for filename in os.listdir("./cogs"):
