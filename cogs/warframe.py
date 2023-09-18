@@ -349,10 +349,10 @@ class Warframe(commands.Cog):
                                 )
                                 embed.add_field(
                                     name=wepinfo["unrolled"]["compatibility"],
-                                    value=f'Average value: {round(wepinfo["unrolled"]["avg"])} <:Platinum:573969761919303720>'
-                                    f'\nMin Price: {wepinfo["unrolled"]["min"]} <:Platinum:573969761919303720>'
-                                    f'\nMax Price: {wepinfo["unrolled"]["max"]} <:Platinum:573969761919303720>'
-                                    f'\nMedian Price: {wepinfo["unrolled"]["median"]} <:Platinum:573969761919303720>',
+                                    value=f'Average value: {round(wepinfo["unrolled"]["avg"])} :Platinum:'
+                                    f'\nMax Price: {wepinfo["unrolled"]["max"]} :Platinum:'
+                                    f'\nMin Price: {wepinfo["unrolled"]["min"]} :Platinum:'
+                                    f'\nMedian Price: {wepinfo["unrolled"]["median"]} :Platinum:',
                                     inline=False,
                                 )
                                 embed.add_field(
@@ -384,14 +384,15 @@ class Warframe(commands.Cog):
                                 )
                                 if (
                                     not "veiled" in name.lower()
-                                ):  # Unless riven is Veiled, give link to relevant page on semlar.com
+                                ):  # Unless riven is Veiled, give link to relevant page on warframe.market and riven.market
                                     embed.add_field(
-                                        name="More info about this Riven:",
-                                        value=f"[Click Me]({'https://semlar.com/rivenprices/'+name.lower()})",
+                                        name=f"3rd Party site listings for {name.title()}:",
+                                        value=f"""[warframe.market](https://warframe.market/auctions/search?type=riven&weapon_url_name={name.lower().replace(' ', '_')}&polarity=any&sort_by=price_asc)\n
+                                        [riven.market](https://riven.market/list/PC/{name.lower().replace(' ', '_')})""",
                                         inline=False,
                                     )
                                 embed.add_field(
-                                    name="⚠️All info comes from Trade Chat via Warframe's own API. \nBot does not take warframe.market and riven.market into account.",
+                                    name="⚠️All info comes from Trade Chat via Warframe's own API. \nBot does not take warframe.market and riven.market prices into account(click on respective hyperlinks to check prices there for yourself).",
                                     value="\u200b",
                                 )
 
