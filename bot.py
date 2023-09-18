@@ -53,7 +53,7 @@ async def on_message(message):
             pass
         else:
             retard_role = discord.utils.get(
-                message.guild.roles, name="tacoless and bitchless"
+                message.guild.roles, name="tacoless and bitchless"  # I know using role name instead of id is retarded cry harder
             )
             await message.author.add_roles(retard_role)
             await message.delete()
@@ -73,8 +73,6 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
-# noinspection PyUnresolvedReferences
-# idk why it bitches it works just fine
 @bot.tree.command(name="ping", description="what do you think lol")
 async def ping(interaction: discord.Interaction):
     await interaction.response.send_message(f"Latency: {round(bot.latency * 1000)} ms")
@@ -229,7 +227,7 @@ async def sortie(ctx):
 async def riven(ctx):
     em = discord.Embed(
         title=">riven",
-        description="Shows info about Trade Chat Riven Prices",
+        description="Shows info about Trade Chat Riven Prices according to Warframe's own riven API.",
         color=0x00DFFF,
     )
     em.add_field(name="**Aliases**", value="riven\n riv")
