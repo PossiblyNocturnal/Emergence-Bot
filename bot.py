@@ -7,12 +7,9 @@ from discord.ext import commands
 import re
 import asyncio
 
-# from discord import app_commands
-
 
 intents = discord.Intents().all()
 load_dotenv()
-# noinspection PyTypeChecker
 bot = commands.Bot(command_prefix=">", intents=intents)
 bot.remove_command("help")
 mean_messages = [
@@ -53,7 +50,8 @@ async def on_message(message):
             pass
         else:
             retard_role = discord.utils.get(
-                message.guild.roles, name="tacoless and bitchless"  # I know using role name instead of id is retarded cry harder
+                message.guild.roles,
+                name="tacoless and bitchless",  # I know using role name instead of id is retarded cry harder
             )
             await message.author.add_roles(retard_role)
             await message.delete()
