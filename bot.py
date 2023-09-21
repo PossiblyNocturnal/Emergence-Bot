@@ -17,7 +17,11 @@ parser.add_argument("-t", "--test", action="store_true")
 args = parser.parse_args()
 intents = discord.Intents().all()
 load_dotenv()
-bot = commands.Bot(command_prefix=">", intents=intents)
+if args.test:
+    prefix="^"
+else:
+    prefix=">"
+bot = commands.Bot(command_prefix=prefix, intents=intents)
 bot.remove_command("help")
 
 
@@ -246,7 +250,7 @@ async def riven(ctx):
 
 
 @bot.command(aliases=["8ball"])  # Literally just a  boring 8ball command.
-async def _8ball(ctx):
+async def _8ball(ctx, *,question=None):
     responses = [
         "It is certain.",
         "It is decidedly so.",
@@ -269,7 +273,10 @@ async def _8ball(ctx):
         "Outlook not so good.",
         "Very doubtful.",
     ]
-    await ctx.message.reply(f"Answer: {random.choice(responses)}")
+    if not question:
+        await ctx.message.reply("you are fucking retarded")
+    else:
+        await ctx.message.reply(f"Answer: {random.choice(responses)}")
 
 
 @bot.command(name="assign")
