@@ -19,6 +19,8 @@ intents = discord.Intents().all()
 load_dotenv()
 bot = commands.Bot(command_prefix=">", intents=intents)
 bot.remove_command("help")
+
+
 mean_messages = [
     "how about you ping some bitches instead",
     "this is harassment",
