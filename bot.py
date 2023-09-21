@@ -45,8 +45,9 @@ async def on_message(message):
         random_index = random.randrange(len(mean_messages))
         await message.channel.send(mean_messages[random_index])
     elif message.channel.id == 1114616834591838258 and message.author.id != bot.user.id:
-        taco_check = re.compile(r"🌮")
-        if taco_check.match(message.content):
+        taco_check = re.search(r"🌮", message.content.strip())
+        taco_plead_check = re.search(r":taco_plead:", message.content.strip())
+        if taco_check or taco_plead_check:
             pass
         else:
             retard_role = discord.utils.get(
