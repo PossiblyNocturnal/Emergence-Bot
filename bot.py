@@ -6,8 +6,15 @@ from dotenv import load_dotenv
 from discord.ext import commands
 import re
 import asyncio
+import argparse
 
 
+parser = argparse.ArgumentParser(
+    prog="NotRay",
+    description="A simple multipurpose Discord bot for whatever feat. Warframe commands",
+)
+parser.add_argument("-t", "--test", action="store_true")
+args = parser.parse_args()
 intents = discord.Intents().all()
 load_dotenv()
 bot = commands.Bot(command_prefix=">", intents=intents)
@@ -407,4 +414,15 @@ async def load_cogs():
             await bot.load_extension(f"cogs.{filename[:-3]}")
 
 
-bot.run(os.getenv("TOKEN"))
+if args.test:
+    try:
+        print("k using test bot's token(or trying, at least)")
+        bot.run(os.getenv("TEST_TOKEN"))
+    except:
+        print("You fucked something up retard go fix it")
+else:
+    try:
+        print("Using main bot's token now.")
+        bot.run(os.getenv("TOKEN"))
+    except:
+        print("this also doesnt work lol")
