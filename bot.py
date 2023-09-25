@@ -18,9 +18,9 @@ args = parser.parse_args()
 intents = discord.Intents().all()
 load_dotenv()
 if args.test:
-    prefix="^"
+    prefix = "^"
 else:
-    prefix=">"
+    prefix = ">"
 bot = commands.Bot(command_prefix=prefix, intents=intents)
 bot.remove_command("help")
 
@@ -250,7 +250,7 @@ async def riven(ctx):
 
 
 @bot.command(aliases=["8ball"])  # Literally just a  boring 8ball command.
-async def _8ball(ctx, *,question=None):
+async def _8ball(ctx, *, question=None):
     responses = [
         "It is certain.",
         "It is decidedly so.",

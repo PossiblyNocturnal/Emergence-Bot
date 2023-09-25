@@ -165,7 +165,7 @@ class Warframe(commands.Cog):
                     cetus_bounties = await bounties_request.json()
                     cetus_time = await request.json()
                     time_left = cetus_time["shortString"]
-                    ostron_syndicate = cetus_bounties[21]
+                    ostron_syndicate = cetus_bounties[0]
                     if cetus_time["isDay"]:
                         cetus_embed.add_field(
                             name="☀ It's Day!",
@@ -214,7 +214,7 @@ class Warframe(commands.Cog):
                 ) as bounties_request:
                     vallis_time = await request.json()
                     vallis_bounties = await bounties_request.json()
-                    vallis_syndicate = vallis_bounties[23]
+                    vallis_syndicate = vallis_bounties[2]
                     time_left = vallis_time["shortString"]
                     if vallis_time["isWarm"]:
                         vallis_embed.add_field(
@@ -261,7 +261,7 @@ class Warframe(commands.Cog):
                     "https://api.warframestat.us/pc/syndicateMissions"
                 ) as bounties_request:
                     cambion_bounties = await bounties_request.json()
-                    cambion_syndicate = cambion_bounties[21]
+                    cambion_syndicate = cambion_bounties[1]
                     cycle = await request.json()
                     if cycle["active"] == "vome":
                         cambion_embed.add_field(
@@ -294,8 +294,11 @@ class Warframe(commands.Cog):
     async def sorties(self, ctx):
         randfunne = random.randrange(len(self.funne))
         emblem = discord.File("images/sortie.png", filename="sortie.png")
+        headers = {"content-language": "en"}
         async with aiohttp.ClientSession() as session:
-            async with session.get("https://api.warframestat.us/pc/sortie") as request:
+            async with session.get(
+                "https://api.warframestat.us/pc/sortie", headers=headers
+            ) as request:
                 sortie = await request.json()
                 faction = sortie["faction"]
                 mission_no = 0
