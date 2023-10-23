@@ -5,8 +5,8 @@
 /package.json
 /cogs/__pycache__
 /vc.json
-/feet_pics.py
 /poetry.lock
 /servers.json
 /__pycache__
 /.vscode
+/.python-version

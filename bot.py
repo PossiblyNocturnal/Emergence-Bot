@@ -13,7 +13,12 @@ parser = argparse.ArgumentParser(
     prog="NotRay",
     description="A simple multipurpose Discord bot for whatever feat. Warframe commands",
 )
-parser.add_argument("-t", "--test", action="store_true")
+parser.add_argument(
+    "-t",
+    "--test",
+    action="store_true",
+    help="uses test bot's token instead of the production one",
+)
 args = parser.parse_args()
 intents = discord.Intents().all()
 load_dotenv()
