@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "notray"
+name = "emergence-bot"
 version = "1.0.0"
-description = "A discord bot, a really bad one"
+description = "An all-purpose discord bot for personal use."
 authors = ["CephieCodesStuff <yourlittlecephalon@protonmail.com>"]
 readme = "README.md"
 
@@ -12,6 +12,8 @@ python-dotenv = "^0.21.0"
 fuzzywuzzy = "^0.18.0"
 python-levenshtein = "^0.20.8"
 black = "^22.10.0"
+aiohttp = "^3.8.6"
+aiodns = "^3.1.1"
 
 
 [build-system]
