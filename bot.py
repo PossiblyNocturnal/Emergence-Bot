@@ -55,7 +55,10 @@ async def on_ready():
     await bot.tree.sync()
     await load_cogs()
     print(f"k logged in as {bot.user}")
-
+    
+@bot.event
+async def on_guild_join(guild):
+    print(f"k joined {discord.utils.get(guild.id)}")
 
 @bot.event
 async def on_message(message):
