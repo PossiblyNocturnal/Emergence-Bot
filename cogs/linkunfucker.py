@@ -8,14 +8,7 @@ class link_unfucker(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
-            tweet_links = []
-            if "https://x.com" or "https://twitter.com" in message.content:
-                 pass
-            fxt_embed = discord.Embed(color=discord.Color.blue)
-            async with aiohttp.ClientSession() as session:
-                for i in tweet_links:
-                    async with session.get(i):
-                        pass
+            pass
             # await reply.edit(embed=fxt_embed)
 
 
