@@ -214,7 +214,7 @@ class Warframe(commands.Cog):
                 ) as bounties_request:
                     vallis_time = await request.json()
                     vallis_bounties = await bounties_request.json()
-                    vallis_syndicate = vallis_bounties[2]
+                    vallis_syndicate = vallis_bounties[3]
                     time_left = vallis_time["shortString"]
                     if vallis_time["isWarm"]:
                         vallis_embed.add_field(
@@ -261,7 +261,7 @@ class Warframe(commands.Cog):
                     "https://api.warframestat.us/pc/syndicateMissions"
                 ) as bounties_request:
                     cambion_bounties = await bounties_request.json()
-                    cambion_syndicate = cambion_bounties[1]
+                    cambion_syndicate = cambion_bounties[2]
                     cycle = await request.json()
                     if cycle["active"] == "vome":
                         cambion_embed.add_field(
