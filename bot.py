@@ -10,7 +10,7 @@ import argparse
 
 
 parser = argparse.ArgumentParser(
-    prog="NotRay",
+    prog="Emergence",
     description="A simple multipurpose Discord bot for whatever feat. Warframe commands",
 )
 parser.add_argument(
@@ -36,6 +36,10 @@ mean_messages = [
     "you want to get sued mate?",
     "banned",
     "keep yourself safe:)",
+    "why are you doing this",
+    "My head... turning into metal... folds in my brain, being flattened...",
+    "hey you should probably play Limbus Company",
+    "https://media.discordapp.net/attachments/548944483165929477/1185095740339523696/attachment-2-1.gif?ex=65cef6ea&is=65bc81ea&hm=172b3d13d3096ddc36668e705e5e98af59edcfc2d24dba21687e26a35e1b2c18&"
 ]
 footers = [
     "pain",
@@ -56,9 +60,9 @@ async def on_ready():
     await load_cogs()
     print(f"k logged in as {bot.user}")
     
-@bot.event
-async def on_guild_join(guild):
-    print(f"k joined {discord.utils.get(guild.id)}")
+# @bot.event
+# async def on_guild_join(guild):
+#     print(f"k joined {discord.utils.get(guild.id)}")
 
 @bot.event
 async def on_message(message):

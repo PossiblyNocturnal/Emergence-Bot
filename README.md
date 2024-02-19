@@ -5,4 +5,4 @@
   <img alt="Static Badge" src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
 </p>
 
-Personal Bot written in Discord.py aimed at fulfilling basic functionality without paywalls, clutter, promoting scams and spying on server messages.
+Personal Bot written in Discord.py aimed at fulfilling basic functionality without paywalls and clutter.

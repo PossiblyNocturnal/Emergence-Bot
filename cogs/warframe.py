@@ -3,7 +3,7 @@ from discord.ext import commands
 from datetime import datetime
 import aiohttp
 import random
-from fuzzywuzzy import fuzz
+from rapidfuzz import fuzz
 
 
 class Warframe(commands.Cog):
