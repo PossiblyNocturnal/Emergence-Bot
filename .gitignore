@@ -8,3 +8,6 @@
 /poetry.lock
 /servers.json
 /__pycache__
+/.vscode
+/test.py
+/.python-version
