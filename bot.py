@@ -39,7 +39,7 @@ mean_messages = [
     "why are you doing this",
     "yeah",
     "hey you should probably play Limbus Company",
-    "https://media.discordapp.net/attachments/548944483165929477/1185095740339523696/attachment-2-1.gif?ex=65cef6ea&is=65bc81ea&hm=172b3d13d3096ddc36668e705e5e98af59edcfc2d24dba21687e26a35e1b2c18&"
+    "https://media.discordapp.net/attachments/548944483165929477/1185095740339523696/attachment-2-1.gif?ex=65cef6ea&is=65bc81ea&hm=172b3d13d3096ddc36668e705e5e98af59edcfc2d24dba21687e26a35e1b2c18&",
 ]
 footers = [
     "pain",
@@ -59,13 +59,15 @@ async def on_ready():
     await bot.tree.sync()
     await load_cogs()
     print(f"k logged in as {bot.user}")
-    
+
+
 #!! IT FKIN WORKS YEEE
-#TODO Either drop this into a json because why bother or lose half your hairline making proper sql db
-@bot.event
-async def on_guild_join(guild):
-    server = guild.id
-    print(f"k joined {server}")
+# TODO Either drop this into a json because why bother or lose half your hairline making proper sql db
+# @bot.event
+# async def on_guild_join(guild):
+#     server = guild.id
+#     print(f"k joined {server}")
+
 
 @bot.event
 async def on_message(message):
@@ -377,10 +379,12 @@ async def yeet_error(ctx, error):
         await ctx.message.add_reaction("❌")
         await ctx.send("eee fix that shit <@223478168399511562>")
 
+
 # @bot.command(name="gid")
 # async def gid(ctx):
 #     server = ctx.guild.id
 #     await ctx.send(f"current guild id: {server}")
+
 
 @bot.command(name="whois", aliases=["who"])
 async def whois(ctx, member: discord.Member = None):
