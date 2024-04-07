@@ -4,6 +4,7 @@ version = "1.0.0"
 description = "An all-purpose discord bot for personal use."
 authors = ["CephieCodesStuff <yourlittlecephalon@protonmail.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11.5"
