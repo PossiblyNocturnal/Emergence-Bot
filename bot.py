@@ -17,7 +17,7 @@ parser.add_argument(
     "-t",
     "--test",
     action="store_true",
-    help="uses test bot's token instead of the production one",
+    help="uses test bot's token instead of the main one",
 )
 args = parser.parse_args()
 intents = discord.Intents().all()
@@ -129,7 +129,7 @@ async def help(ctx):
 async def whois(ctx):
     em = discord.Embed(
         title=">whois",
-        description="Provides basic info about a user. If no argument is provided, shows info about you.\n **DOES NOT "
+        description="Provides basic info about a user. If no argument is provided, shows info about you instead.\n **DOES NOT "
         "SHOW INFO ABOUT USERS NOT ON THE SERVER**",
         color=0xDB9A7E,
     )
@@ -289,6 +289,7 @@ async def _8ball(ctx, *, question=None):
         "My sources say no.",
         "Outlook not so good.",
         "Very doubtful.",
+        "Оффнись нахуй уёбище"
     ]
     if not question:
         await ctx.message.reply("you are fucking retarded")
